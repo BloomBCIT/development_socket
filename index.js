@@ -30,7 +30,13 @@ io.on("connection", function(socket){
             allRooms[data] = [];
         }
         
+        
+        allRooms[data].push(socket.id);
+        io.to(data).emit("createimage", allRooms[data]);
     
+           console.log(data);
+        
+    });
         
     socket.on("sendChat", function(data){
         console.log("user sent a msg for chat");
@@ -38,7 +44,7 @@ io.on("connection", function(socket){
         
         io.emit("msgsent", msgs);
     });
-
+    
     
     socket.on("disconnect", function(){
         var index = allRooms[this.myRoom].indexOf(socket.id);
